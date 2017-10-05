@@ -13,7 +13,6 @@ func requestHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "r.Method:           ",  r.Method           )
 	fmt.Fprintln(w, "r.URL:              ",  r.URL              )
 	fmt.Fprintln(w, "r.Proto:            ",  r.Proto            )
-	fmt.Fprintln(w, "r.Header:           ",  r.Header           )
 	fmt.Fprintln(w, "r.ContentLength:    ",  r.ContentLength    )
 	fmt.Fprintln(w, "r.TransferEncoding: ",  r.TransferEncoding )
 	fmt.Fprintln(w, "r.Close:            ",  r.Close            )
@@ -30,6 +29,11 @@ func requestHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "r.URL.RawPath:      ", r.URL.RawPath       )
 	fmt.Fprintln(w, "r.URL.RawQuery:     ", r.URL.RawQuery      )
 	fmt.Fprintln(w, "r.URL.Fragment:     ", r.URL.Fragment      )
+
+	fmt.Fprintln(w, "Header:")
+	for key, value := range r.Header {
+		fmt.Fprintln(w, "\t" + key + ":", value)
+	}
 
 	body := new(bytes.Buffer)
 	body.ReadFrom(r.Body)
