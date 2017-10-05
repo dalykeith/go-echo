@@ -1,16 +1,15 @@
-// A simple web application example.
-// Taken from: https://golang.org/doc/articles/wiki/
-// https://ianmcloughlin.github.io :: 2017-09-13
+// An echo web application.
+// https://ianmcloughlin.github.io :: 2017-10-05
 
 package main
 
 import (
 	"fmt"
 	"net/http"
+	"bytes"
 )
 
 func requestHandler(w http.ResponseWriter, r *http.Request) {
-	
 	fmt.Fprintln(w, "r.Method:           ",  r.Method           )
 	fmt.Fprintln(w, "r.URL:              ",  r.URL              )
 	fmt.Fprintln(w, "r.Proto:            ",  r.Proto            )
@@ -23,7 +22,6 @@ func requestHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "r.PostForm:         ",  r.PostForm         )
 	fmt.Fprintln(w, "r.RemoteAddr:       ",  r.RemoteAddr       )
 	fmt.Fprintln(w, "r.RequestURI:       ",  r.RequestURI       )
-	//fmt.Fprintln(w, "r.Body:             ",  w(bytes.Buffer).ReadFrom(r.Body).String())
 
 	fmt.Fprintln(w, "r.URL.Opaque:       ", r.URL.Opaque        )
 	fmt.Fprintln(w, "r.URL.Scheme:       ", r.URL.Scheme        )
@@ -32,6 +30,10 @@ func requestHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "r.URL.RawPath:      ", r.URL.RawPath       )
 	fmt.Fprintln(w, "r.URL.RawQuery:     ", r.URL.RawQuery      )
 	fmt.Fprintln(w, "r.URL.Fragment:     ", r.URL.Fragment      )
+
+	body := new(bytes.Buffer)
+	body.ReadFrom(r.Body)
+	fmt.Fprintln(w, "r.Body:             ",  body.String())
 }
 
 func main() {
